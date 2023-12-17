@@ -1,0 +1,34 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "racism"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/joeseph",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "joeseph",
+	"flip_x": false,
+	"healthbar_colors": [
+		184,
+		61,
+		186
+	],
+	"camera_position": [
+		0,
+		-10
+	],
+	"sing_duration": 4,
+	"scale": 0.8
+}

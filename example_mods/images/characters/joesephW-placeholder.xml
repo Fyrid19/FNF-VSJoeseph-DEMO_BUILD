@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="joesephW-placeholder.png">
+<SubTexture name="idle0000" x="0" y="0" width="1426" height="1979" frameX="-14" frameY="-95" frameWidth="1414" frameHeight="2169" />
+</TextureAtlas>
