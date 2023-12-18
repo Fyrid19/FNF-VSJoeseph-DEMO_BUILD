@@ -7,6 +7,7 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import flixel.input.mouse.FlxMouseEventManager;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -36,7 +37,6 @@ class MainMenuState extends MusicBeatState
 		'story_mode',
 		'freeplay',
 		'options',
-		'gallery',
 		'credits'
 	];
 
@@ -44,6 +44,8 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+
+	var galleryButton:FlxSprite;
 
 	override function create()
 	{
@@ -99,6 +101,15 @@ class MainMenuState extends MusicBeatState
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
+
+		galleryButton = new FlxSprite().loadGraphic(Paths.image('gallerybutton'));
+		galleryButton.setGraphicSize(Std.int(galleryButton.width * 0.3));
+		galleryButton.antialiasing = ClientPrefs.globalAntialiasing;
+		galleryButton.scrollFactor.set(0, 0);
+		galleryButton.updateHitbox();
+		galleryButton.x = FlxG.width - (galleryButton.width + 10);
+		galleryButton.y = 10;
+		add(galleryButton);
 
 		var scale:Float = 1;
 		/*if(optionShit.length > 6) {
@@ -268,6 +279,22 @@ class MainMenuState extends MusicBeatState
 				MusicBeatState.switchState(new MasterEditorMenu());
 			}
 			#end
+		}
+
+		if (FlxG.mouse.overlaps(galleryButton)) 
+		{
+			galleryButton.color = 0xCACACA;
+
+			if (FlxG.mouse.justPressed) 
+			{
+				if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+
+				//FlxG.sound.play(Paths.sound('confirmMenu'));
+				MusicBeatState.switchState(new GalleryState());
+				selectedSomethin = true;
+			}
+		} else {
+			galleryButton.color = 0xFFFFFF;
 		}
 
 		super.update(elapsed);
