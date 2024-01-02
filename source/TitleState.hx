@@ -8,6 +8,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.input.keyboard.FlxKey;
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
@@ -232,6 +233,9 @@ class TitleState extends MusicBeatState
 	}
 
 	var logoBl:FlxSprite;
+    var grid:FlxBackdrop;
+    var bar1:FlxBackdrop;
+    var bar2:FlxBackdrop;
 	var gfDance:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
@@ -283,6 +287,31 @@ class TitleState extends MusicBeatState
 		// bg.updateHitbox();
 		add(bg);
 
+		grid = new FlxBackdrop(Paths.image('grid'), 0.2, 0, true, true);
+		grid.setGraphicSize(Std.int(grid.width * 3), Std.int(grid.height * 3));
+		grid.color = 0xFFFFFF;
+		grid.velocity.set(100, 100);
+		grid.updateHitbox();
+		grid.alpha = 0.2;
+		grid.screenCenter(X);
+		add(grid);
+
+		bar1 = new FlxBackdrop(Paths.image('sonicbars'), 0.2, 0, true, false);
+		bar1.antialiasing = ClientPrefs.globalAntialiasing;
+		bar1.velocity.set(50, 0);
+		bar1.updateHitbox();
+		bar1.screenCenter(X);
+		bar1.y = FlxG.height - 110;
+		add(bar1);
+
+		bar2 = new FlxBackdrop(Paths.image('sonicbars2'), 0.2, 0, true, false);
+		bar2.antialiasing = ClientPrefs.globalAntialiasing;
+		bar2.velocity.set(-50, 0);
+		bar2.updateHitbox();
+		bar2.screenCenter(X);
+		bar2.y = -50;
+		add(bar2);
+
 		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 
@@ -290,7 +319,7 @@ class TitleState extends MusicBeatState
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-		// logoBl.screenCenter();
+		logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
 
 		swagShader = new ColorSwap();
@@ -330,7 +359,7 @@ class TitleState extends MusicBeatState
 		}
 		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
 
-		add(gfDance);
+		//add(gfDance);
 		gfDance.shader = swagShader.shader;
 		add(logoBl);
 		logoBl.shader = swagShader.shader;
@@ -382,7 +411,7 @@ class TitleState extends MusicBeatState
 		logo.antialiasing = ClientPrefs.globalAntialiasing;
 		// add(logo);
 
-		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
+		FlxTween.tween(logoBl, {y: logoBl.y + 10}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
 		// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
 
 		credGroup = new FlxGroup();

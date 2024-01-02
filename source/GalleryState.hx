@@ -136,6 +136,16 @@ class GalleryState extends MusicBeatState //awesome..
             'abomination',
             'Mbestjo',
             'oh god'
+        ],
+        [
+            'Joeseph Art 7',
+            'joe_mama',
+            'Made by Raz'
+        ],
+        [
+            'Joeseph Art 8',
+            'FIRE',
+            'joseph vs johnathan who will won? (Made by Ethan)'
         ]
     ];
 
