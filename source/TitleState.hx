@@ -285,11 +285,12 @@ class TitleState extends MusicBeatState
 		// bg.antialiasing = ClientPrefs.globalAntialiasing;
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
 		// bg.updateHitbox();
+		bg.alpha = 0.4;
 		add(bg);
 
 		grid = new FlxBackdrop(Paths.image('grid'), 0.2, 0, true, true);
 		grid.setGraphicSize(Std.int(grid.width * 3), Std.int(grid.height * 3));
-		grid.color = 0xFFFFFF;
+		grid.color = 0xCB1EFF;
 		grid.velocity.set(100, 100);
 		grid.updateHitbox();
 		grid.alpha = 0.2;
@@ -301,7 +302,7 @@ class TitleState extends MusicBeatState
 		bar1.velocity.set(50, 0);
 		bar1.updateHitbox();
 		bar1.screenCenter(X);
-		bar1.y = FlxG.height - 110;
+		bar1.y = FlxG.height;
 		add(bar1);
 
 		bar2 = new FlxBackdrop(Paths.image('sonicbars2'), 0.2, 0, true, false);
@@ -309,7 +310,7 @@ class TitleState extends MusicBeatState
 		bar2.velocity.set(-50, 0);
 		bar2.updateHitbox();
 		bar2.screenCenter(X);
-		bar2.y = -50;
+		bar2.y = -160;
 		add(bar2);
 
 		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
@@ -726,6 +727,9 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
+			FlxTween.tween(bar1, {y: FlxG.height - 110}, 1, {ease: FlxEase.circOut});
+			FlxTween.tween(bar2, {y: -50}, 1, {ease: FlxEase.circOut});
+
 			if (playJingle) //Ignore deez
 			{
 				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
