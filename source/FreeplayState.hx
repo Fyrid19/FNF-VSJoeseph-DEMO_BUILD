@@ -43,6 +43,7 @@ class FreeplayState extends MusicBeatState
 	var songCover:FlxSprite;
 	var songCoverMask:FlxSprite;
 	var songCoverFinal:FlxSprite;
+	var diffSprite:FlxSprite;
 	var arrow1:FlxSprite;
 	var arrow2:FlxSprite;
 	var songText:FlxText;
@@ -55,6 +56,15 @@ class FreeplayState extends MusicBeatState
 	var intendedRating:Float = 0;
 
 	var tagline:String = '';
+
+	public static var availableDiffs:Array<String> = [
+		'normal',
+		'nerfed'
+	];
+
+	public static var curDiff:String = '';
+	var diffSelected:Int = 0;
+	var songSelected:Bool = false;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -165,6 +175,14 @@ class FreeplayState extends MusicBeatState
 		songCoverFinal.y -= 180;
 		FlxSpriteUtil.alphaMaskFlxSprite(songCover, songCoverMask, songCoverFinal);
 		add(songCoverFinal);
+
+		diffSprite = new FlxSprite().loadGraphic(Paths.image('freeplaydifficulties/normal'));
+		diffSprite.antialiasing = ClientPrefs.globalAntialiasing;
+		diffSprite.setGraphicSize(Std.int(diffSprite.width * 0.5));
+		diffSprite.updateHitbox();
+		diffSprite.screenCenter(X);
+		diffSprite.y = -300;
+		add(diffSprite);
 
 		tagline = getFreeplayTag();
 
@@ -334,26 +352,34 @@ class FreeplayState extends MusicBeatState
 		{
 			if (leftP)
 			{
-				changeSelection(-shiftMult);
-				updateSongCoverAndText();
-				holdTime = 0;
+				if (!songSelected) {
+					changeSelection(-shiftMult);
+					updateSongCoverAndText();
+					holdTime = 0;
 
-				FlxTween.cancelTweensOf(arrow1);
-				arrow1.x = 0;
-				FlxTween.tween(arrow1, {x: 20}, 1, {ease: FlxEase.circOut});
+					FlxTween.cancelTweensOf(arrow1);
+					arrow1.x = 0;
+					FlxTween.tween(arrow1, {x: 20}, 1, {ease: FlxEase.circOut});
+				} else {
+					changeDiff(-1);
+				}
 			}
 			if (rightP)
 			{
-				changeSelection(shiftMult);
-				updateSongCoverAndText();
-				holdTime = 0;
+				if (!songSelected) {
+					changeSelection(shiftMult);
+					updateSongCoverAndText();
+					holdTime = 0;
 
-				FlxTween.cancelTweensOf(arrow2);
-				arrow2.x = FlxG.width - 150;
-				FlxTween.tween(arrow2, {x: FlxG.width - 170}, 1, {ease: FlxEase.circOut});
+					FlxTween.cancelTweensOf(arrow2);
+					arrow2.x = FlxG.width - 150;
+					FlxTween.tween(arrow2, {x: FlxG.width - 170}, 1, {ease: FlxEase.circOut});
+				} else {
+					changeDiff(1);
+				}
 			}
 
-			if(controls.UI_LEFT || controls.UI_RIGHT)
+			if((controls.UI_LEFT || controls.UI_RIGHT) && !songSelected)
 			{
 				var checkLastHold:Int = Math.floor((holdTime - 0.5) * 10);
 				holdTime += elapsed;
@@ -379,7 +405,7 @@ class FreeplayState extends MusicBeatState
 				}
 			}
 
-			if(FlxG.mouse.wheel != 0 && FlxG.keys.pressed.SHIFT)
+			if(FlxG.mouse.wheel != 0 && FlxG.keys.pressed.SHIFT && !songSelected)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
 				changeSelection(-1 * FlxG.mouse.wheel, false);
@@ -389,12 +415,16 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			persistentUpdate = false;
-			if(colorTween != null) {
-				colorTween.cancel();
+			if (!songSelected) {
+				persistentUpdate = false;
+				if(colorTween != null) {
+					colorTween.cancel();
+				}
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				MusicBeatState.switchState(new MainMenuState());
+			} else {
+				setDiffSelect(false);
 			}
-			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
 		}
 
 		if(ctrl)
@@ -445,28 +475,30 @@ class FreeplayState extends MusicBeatState
 			trace(poop);
 
 			if (sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) || sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
-			
-			trace(sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)));
+				if (songSelected) {
+					trace(sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)));
 
-			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
+					PlayState.SONG = Song.loadFromJson(poop, songLowercase);
+					PlayState.isStoryMode = false;
+					PlayState.storyDifficulty = curDifficulty;
 
-			trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
-			if(colorTween != null) {
-				colorTween.cancel();
-			}
-			
-			if (FlxG.keys.pressed.SHIFT){
-				LoadingState.loadAndSwitchState(new ChartingState());
-			}else{
-				LoadingState.loadAndSwitchState(new PlayState());
-			}
-
-			FlxG.sound.music.volume = 0;
+					trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
+					if(colorTween != null) {
+						colorTween.cancel();
+					}
 					
-			destroyFreeplayVocals();
+					if (FlxG.keys.pressed.SHIFT){
+						LoadingState.loadAndSwitchState(new ChartingState());
+					}else{
+						LoadingState.loadAndSwitchState(new PlayState());
+					}
 
+					FlxG.sound.music.volume = 0;
+							
+					destroyFreeplayVocals();
+				}
+
+				setDiffSelect(true);
 			} else {
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				FlxTween.cancelTweensOf(errorText);
@@ -491,6 +523,18 @@ class FreeplayState extends MusicBeatState
 			vocals.destroy();
 		}
 		vocals = null;
+	}
+
+	function setDiffSelect(selected:Bool = true) {
+		songSelected = selected;
+
+		FlxTween.cancelTweensOf(diffSprite);
+
+		if (selected == true) {
+			FlxTween.tween(diffSprite, {y: 35}, 0.7, {ease: FlxEase.backOut});
+		} else {
+			FlxTween.tween(diffSprite, {y: -300}, 0.7, {ease: FlxEase.backIn});
+		}
 	}
 
 	function getFreeplayTag():String //stolen from title text..
@@ -522,6 +566,22 @@ class FreeplayState extends MusicBeatState
 		FlxSpriteUtil.alphaMaskFlxSprite(songCover, songCoverMask, songCoverFinal);
 	}
 
+	function changeDiff(change:Int = 0, playSound:Bool = true)
+	{
+		if(playSound) FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+
+		diffSelected += change;
+
+		if (diffSelected < 0)
+			diffSelected = availableDiffs.length - 1;
+		if (diffSelected >= availableDiffs.length)
+			diffSelected = 0;
+
+		curDiff = availableDiffs[diffSelected];
+		diffSprite.loadGraphic(Paths.image('freeplaydifficulties/' + curDiff));
+		trace(curDiff);
+	}
+	
 	function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
 		if(playSound) FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);

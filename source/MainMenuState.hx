@@ -55,6 +55,8 @@ class MainMenuState extends MusicBeatState
 		#end
 		WeekData.loadTheFirstEnabledMod();
 
+		FlxG.mouse.visible = true;
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
@@ -253,6 +255,11 @@ class MainMenuState extends MusicBeatState
 				{
 					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 				}
+				else if (optionShit[curSelected] == 'story_mode')
+				{
+					FlxG.camera.shake(0.01, 0.1);
+					FlxG.sound.play(Paths.sound('cancelMenu'));
+				}
 				else
 				{
 					selectedSomethin = true;
@@ -333,6 +340,12 @@ class MainMenuState extends MusicBeatState
 		{
 			//spr.screenCenter(X);
 			//spr.x = 20;
+
+			if (spr.ID == 0) {
+				spr.color = 0xBBBBBB;
+			} else {
+				spr.color = 0xFFFFFF;
+			}
 		});
 	}
 
