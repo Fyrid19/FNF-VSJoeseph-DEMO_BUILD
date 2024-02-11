@@ -181,7 +181,7 @@ class GalleryState extends MusicBeatState //awesome..
     var imageLock:Bool = false;
 
     var awesometext1:String = "Use the Scroll Wheel to change image size | Hold CTRL or SHIFT to change scaling multiplier | Press SPACE to toggle movement";
-    var awesometext2:String = "Use the Scroll Wheel to change image size | Hold CTRL or SHIFT to change movement speed | Move the image around with your UI keys";
+    var awesometext2:String = "Move the image around with your UI keys | Hold CTRL or SHIFT to change movement speed | Press SPACE to toggle movement";
 
     override function create()
     {
@@ -272,6 +272,12 @@ class GalleryState extends MusicBeatState //awesome..
             curScale += scaling * FlxG.mouse.wheel;
             trace(curScale);
         }
+
+        if (curScale < 0.1)
+            curScale = 0.1;
+
+        if (curScale > 1.5)
+            curScale = 1.5;
 
         currentImage.setGraphicSize(Std.int(currentImage.width * curScale), Std.int(currentImage.height * curScale));
         if (!imageLock) {

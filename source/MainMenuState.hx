@@ -258,7 +258,7 @@ class MainMenuState extends MusicBeatState
 				else if (optionShit[curSelected] == 'story_mode')
 				{
 					FlxG.camera.shake(0.01, 0.1);
-					FlxG.sound.play(Paths.sound('cancelMenu'));
+					FlxG.sound.play(Paths.sound('lockedMenu'));
 				}
 				else
 				{

@@ -262,12 +262,12 @@ class TitleState extends MusicBeatState
 			// https://github.com/HaxeFlixel/flixel-addons/pull/348
 
 			// var music:FlxSound = new FlxSound();
-			// music.loadStream(Paths.music('freakyMenu'));
+			// music.loadStream(Paths.music('joeMenu'));
 			// FlxG.sound.list.add(music);
 			// music.play();
 
 			if(FlxG.sound.music == null) {
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				FlxG.sound.playMusic(Paths.music('joeMenu'), 0);
 			}
 		}
 
@@ -667,55 +667,55 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					//FlxG.sound.music.stop();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-					FlxG.sound.music.fadeIn(4, 0, 0.7);
-				case 2:
+					FlxG.sound.playMusic(Paths.music('joeMenu'), 0);
+					FlxG.sound.music.fadeIn(4, 0, 1.2);
+				case 4:
 					createCoolText(['Presented to you by'], 15);
 				// credTextShit.visible = true;
-				case 4:
+				case 8:
 					addMoreText('ethanlolcat3', 15);
 					addMoreText('FyriDev', 15);
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
-				case 5:
+				case 10:
 					deleteCoolText();
 				// credTextShit.visible = false;
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
-				case 6:
+				case 12:
 					createCoolText(['Originally', 'owned by'], -40);
-				case 8:
+				case 16:
 					addMoreText('Virusmare', -40);
 				//	ngSpr.visible = true;
 				// credTextShit.text += '\nNewgrounds';
-				case 9:
+				case 18:
 					deleteCoolText();
 				//	ngSpr.visible = false;
 				// credTextShit.visible = false;
 
 				// credTextShit.text = 'Shoutouts Tom Fulp';
 				// credTextShit.screenCenter();
-				case 10:
+				case 20:
 					createCoolText([curWacky[0]]);
 				// credTextShit.visible = true;
-				case 12:
+				case 24:
 					addMoreText(curWacky[1]);
 				// credTextShit.text += '\nlmao';
-				case 13:
+				case 26:
 					deleteCoolText();
 				// credTextShit.visible = false;
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
-				case 14:
+				case 28:
 					addMoreText('FNF');
 				// credTextShit.visible = true;
-				case 15:
+				case 30:
 					addMoreText('Vs');
 				// credTextShit.text += '\nNight';
-				case 16:
+				case 32:
 					addMoreText('Joeseph'); // credTextShit.text += '\nFunkin';
 
-				case 17:
+				case 33:
 					skipIntro();
 			}
 		}
@@ -755,7 +755,7 @@ class TitleState extends MusicBeatState
 						skippedIntro = true;
 						playJingle = false;
 
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+						FlxG.sound.playMusic(Paths.music('joeMenu'), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						return;
 				}
@@ -777,7 +777,7 @@ class TitleState extends MusicBeatState
 					remove(credGroup);
 					FlxG.camera.flash(FlxColor.WHITE, 3);
 					sound.onComplete = function() {
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+						FlxG.sound.playMusic(Paths.music('joeMenu'), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						transitioning = false;
 					};
