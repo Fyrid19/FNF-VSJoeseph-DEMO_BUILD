@@ -669,50 +669,53 @@ class TitleState extends MusicBeatState
 					//FlxG.sound.music.stop();
 					FlxG.sound.playMusic(Paths.music('joeMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 1.2);
-				case 4:
+				case 3:
 					createCoolText(['Presented to you by'], 15);
 				// credTextShit.visible = true;
-				case 8:
+				case 7:
 					addMoreText('ethanlolcat3', 15);
 					addMoreText('FyriDev', 15);
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
-				case 10:
+				case 9:
 					deleteCoolText();
 				// credTextShit.visible = false;
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
-				case 12:
+				case 11:
 					createCoolText(['Originally', 'owned by'], -40);
-				case 16:
+				case 15:
 					addMoreText('Virusmare', -40);
 				//	ngSpr.visible = true;
 				// credTextShit.text += '\nNewgrounds';
-				case 18:
+				case 17:
 					deleteCoolText();
 				//	ngSpr.visible = false;
 				// credTextShit.visible = false;
 
 				// credTextShit.text = 'Shoutouts Tom Fulp';
 				// credTextShit.screenCenter();
-				case 20:
+				case 19:
 					createCoolText([curWacky[0]]);
 				// credTextShit.visible = true;
-				case 24:
+				case 21:
 					addMoreText(curWacky[1]);
 				// credTextShit.text += '\nlmao';
-				case 26:
+				case 23:
+					addMoreText(curWacky[2]);
+				case 25:
 					deleteCoolText();
+					addMoreText('holy shit'); // woah i added another line to the intro text im so cool
 				// credTextShit.visible = false;
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
-				case 28:
-					addMoreText('FNF');
+				case 27:
+					addMoreText('its');
 				// credTextShit.visible = true;
-				case 30:
+				case 29:
 					addMoreText('Vs');
 				// credTextShit.text += '\nNight';
-				case 32:
+				case 31:
 					addMoreText('Joeseph'); // credTextShit.text += '\nFunkin';
 
 				case 33:
