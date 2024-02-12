@@ -80,15 +80,16 @@ class CreditsState extends MusicBeatState
 		}
 		#end
 
-		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color - Quote (coding in a later version)
 			['Vs Joeseph DEMO'],
-			['ethanlolcat3', 		'mod/ethan', 	'Director, Artist, Composer, Charter', 		'https://twitter.com/ethanlolcat3', 						'FFAA00'],
-			['FyriDev', 			'mod/ray', 		'Director, Artist, Coder, Charter', 		'https://twitter.com/FyriDev', 								'5B16CA'],
-			['BoxHaze', 			'mod/hazel', 	'Composer', 								'https://twitter.com/BoxJosh03', 							'FFABF9'],
-			['BringOutTheDead', 	'mod/boo', 		'Artist', 									'https://twitter.com/out_thedead', 							'73E8C3'],
-			['ZoipTheMinion', 		'mod/zoip', 	'Charter', 									'https://www.youtube.com/channel/UCZPZymCX98uP2LgQPWNnMVg', '298BF4'],
-			['AVeryCringeUser', 	'mod/avery', 	'Charter', 									'https://twitter.com/aver_av1',								'3147EA'],
-			['no707', 				'mod/707', 		'Charter', 									'https://twitter.com/n07O7', 								'9C1212'],
+			['ethanlolcat3', 		'mod/ethan', 	'Director, Artist, Composer, Charter', 		'https://twitter.com/ethanlolcat3', 							'FFAA00'],
+			['FyriDev', 			'mod/ray', 		'Director, Artist, Coder, Charter', 		'https://twitter.com/FyriDev', 									'5B16CA'],
+			['BoxHaze', 			'mod/hazel', 	'Composer', 								'https://twitter.com/BoxJosh03', 								'FFABF9'],
+			['BringOutTheDead', 	'mod/boo', 		'Artist', 									'https://twitter.com/out_thedead', 								'73E8C3'],
+			['Virusmare', 			'mod/mare', 	'Artist', 									'https://www.youtube.com/@Virusmare', 							'D6EAF3'],
+			['ZoipTheMinion', 		'mod/zoip', 	'Charter', 									'https://www.youtube.com/channel/UCZPZymCX98uP2LgQPWNnMVg', 	'298BF4'],
+			['AVeryCringeUser', 	'mod/avery', 	'Charter', 									'https://twitter.com/aver_av1',									'3147EA'],
+			['no707', 				'mod/707', 		'Charter', 									'https://twitter.com/n07O7', 									'9C1212'],
 			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
