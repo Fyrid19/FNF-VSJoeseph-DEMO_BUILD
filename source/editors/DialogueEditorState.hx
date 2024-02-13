@@ -23,6 +23,7 @@ import flixel.ui.FlxButton;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
+import lime.app.Application;
 import flash.net.FileFilter;
 import haxe.Json;
 import DialogueBoxPsych;
@@ -259,6 +260,8 @@ class DialogueEditorState extends MusicBeatState
 		if(rpcText.length < 3) rpcText += '   '; //Fixes a bug on RPC that triggers an error when the text is too short
 		DiscordClient.changePresence("Dialogue Editor", rpcText);
 		#end
+
+		Application.current.window.title = Main.applicationTitle + ' || Editing dialogue';
 	}
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {

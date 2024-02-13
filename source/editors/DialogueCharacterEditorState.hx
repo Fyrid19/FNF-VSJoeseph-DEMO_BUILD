@@ -23,6 +23,7 @@ import flixel.ui.FlxButton;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
+import lime.app.Application;
 import flash.net.FileFilter;
 import haxe.Json;
 import DialogueBoxPsych;
@@ -467,6 +468,8 @@ class DialogueCharacterEditorState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Dialogue Character Editor", "Editting: " + character.jsonFile.image);
 		#end
+
+		Application.current.window.title = Main.applicationTitle + ' || Editing: ' + character.jsonFile.image;
 	}
 
 	function updateTextBox() {

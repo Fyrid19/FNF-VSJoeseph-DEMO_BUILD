@@ -12,6 +12,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import lime.app.Application;
 
 class GalleryState extends MusicBeatState //awesome..
 {
@@ -146,6 +147,16 @@ class GalleryState extends MusicBeatState //awesome..
             'Joeseph Art 8',
             'FIRE',
             'joseph vs johnathan who will won? (Made by Ethan)'
+        ],
+        [
+            'Joeseph Art 9',
+            'joecry',
+            'joecry (Made by Shell)'
+        ],
+        [
+            'cat joeseph',
+            'JOE_CAT_OMG',
+            'blink twice if you need help (Made by Ethan)'
         ]
     ];
 
@@ -185,6 +196,8 @@ class GalleryState extends MusicBeatState //awesome..
 
     override function create()
     {
+        Application.current.window.title = Main.applicationTitle + ' || ' + 'Viewing antiques';
+
         bg = new FlxSprite().loadGraphic(Paths.image('menuNegated'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
         bg.color = 0xCC5AD0;

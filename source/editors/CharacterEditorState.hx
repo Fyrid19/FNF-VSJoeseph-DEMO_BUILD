@@ -28,6 +28,7 @@ import flixel.ui.FlxSpriteButton;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
+import lime.app.Application;
 import haxe.Json;
 import Character;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
@@ -343,7 +344,7 @@ class CharacterEditorState extends MusicBeatState
 					"fps": 24,
 					"anim": "idle",
 					"indices": [],
-					"name": "Dad idle dance"
+					"name": "idle"
 				},
 				{
 					"offsets": [
@@ -354,7 +355,7 @@ class CharacterEditorState extends MusicBeatState
 					"fps": 24,
 					"anim": "singLEFT",
 					"loop": false,
-					"name": "Dad Sing Note LEFT"
+					"name": "left"
 				},
 				{
 					"offsets": [
@@ -365,7 +366,7 @@ class CharacterEditorState extends MusicBeatState
 					"fps": 24,
 					"anim": "singDOWN",
 					"loop": false,
-					"name": "Dad Sing Note DOWN"
+					"name": "down"
 				},
 				{
 					"offsets": [
@@ -376,7 +377,7 @@ class CharacterEditorState extends MusicBeatState
 					"fps": 24,
 					"anim": "singUP",
 					"loop": false,
-					"name": "Dad Sing Note UP"
+					"name": "up"
 				},
 				{
 					"offsets": [
@@ -387,7 +388,7 @@ class CharacterEditorState extends MusicBeatState
 					"fps": 24,
 					"anim": "singRIGHT",
 					"loop": false,
-					"name": "Dad Sing Note RIGHT"
+					"name": "right"
 				}
 			],
 			"no_antialiasing": false,
@@ -1083,6 +1084,8 @@ class CharacterEditorState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Character Editor", "Character: " + daAnim, leHealthIcon.getCharacter());
 		#end
+
+		Application.current.window.title = Main.applicationTitle + ' || ' + 'Editing character: ' + daAnim;
 	}
 
 	override function update(elapsed:Float)

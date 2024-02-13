@@ -92,6 +92,8 @@ class TitleState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		Application.current.window.title = Main.applicationTitle + ' || ' + 'Title screen';
+
 		#if LUA_ALLOWED
 		Paths.pushGlobalMods();
 		#end
@@ -130,9 +132,9 @@ class TitleState extends MusicBeatState
 		swagShader = new ColorSwap();
 		super.create();
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		// FlxG.save.bind('funkin', 'ninjamuffin99');
 
-		ClientPrefs.loadPrefs();
+		// ClientPrefs.loadPrefs();
 
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.checkForUpdates && !closedState) {

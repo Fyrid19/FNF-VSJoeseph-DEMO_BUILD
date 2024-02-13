@@ -42,6 +42,7 @@ import openfl.net.FileReference;
 import openfl.utils.ByteArray;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.media.AudioBuffer;
+import lime.app.Application;
 import haxe.io.Bytes;
 import flash.geom.Rectangle;
 import flixel.util.FlxSort;
@@ -234,6 +235,8 @@ class ChartingState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
 		#end
+
+		Application.current.window.title = Main.applicationTitle + ' || Charting "' + StringTools.replace(_song.song, '-', ' ') + '"';
 
 		vortex = FlxG.save.data.chart_vortex;
 		ignoreWarnings = FlxG.save.data.ignoreWarnings;

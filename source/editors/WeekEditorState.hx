@@ -24,6 +24,7 @@ import flixel.ui.FlxButton;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
+import lime.app.Application;
 import flash.net.FileFilter;
 import lime.system.Clipboard;
 import haxe.Json;
@@ -369,6 +370,8 @@ class WeekEditorState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Week Editor", "Editting: " + weekFileName);
 		#end
+
+		Application.current.window.title = Main.applicationTitle + ' || Editing a week: ' + weekFileName;
 	}
 	
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {

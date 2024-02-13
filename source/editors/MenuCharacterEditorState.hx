@@ -24,6 +24,7 @@ import MenuCharacter;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
+import lime.app.Application;
 import flash.net.FileFilter;
 import haxe.Json;
 #if sys
@@ -52,6 +53,8 @@ class MenuCharacterEditorState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Menu Character Editor", "Editting: " + characterFile.image);
 		#end
+
+		Application.current.window.title = Main.applicationTitle + ' || Editing a menu character: ' + characterFile.image;
 
 		grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
 		for (char in 0...3)

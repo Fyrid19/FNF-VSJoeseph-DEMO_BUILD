@@ -33,11 +33,24 @@ class SplashState extends MusicBeatState // plays joeseph splash screen then goe
 
     override function create()
     {
-        #if VIDEOS_ALLOWED
-        playSplashVideo(splashVideoName);
-        #else
-        MusicBeatState.switchState(new TitleState()); // cuz no videos allowed!!
-        #end
+		Paths.clearStoredMemory();
+		Paths.clearUnusedMemory();
+
+		PlayerSettings.init();
+
+		FlxG.save.bind('funkin', 'ninjamuffin99');
+
+		ClientPrefs.loadPrefs();
+
+		#if VIDEOS_ALLOWED
+		if (!ClientPrefs.skipIntro) {
+			playSplashVideo(splashVideoName);
+		} else {
+			MusicBeatState.switchState(new TitleState());
+		}
+		#else
+		MusicBeatState.switchState(new TitleState()); // cuz no videos allowed!!
+		#end
 
         /*
         skipText = new FlxText(10, FlxG.height - 42, FlxG.width, "Press ENTER to skip", 32);

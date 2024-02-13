@@ -40,6 +40,7 @@ import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import haxe.Json;
 import lime.utils.Assets;
+import lime.app.Application;
 import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.display.Shader;
@@ -337,6 +338,8 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		Paths.clearStoredMemory();
+
+		Application.current.window.title = Main.applicationTitle + ' || ' + SONG.song + ' - ' + FreeplayState.curDiff.toUpperCase();
 
 		// for lua
 		instance = this;
