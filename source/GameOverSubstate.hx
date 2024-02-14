@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSubState;
+import flixel.FlxCamera;
 import flixel.text.FlxText;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
@@ -14,15 +15,21 @@ import flixel.tweens.FlxTween;
 class GameOverSubstate extends MusicBeatSubstate
 {
 	public var boyfriend:Boyfriend;
+	public var dad:Character;
 	var camFollow:FlxPoint;
 	var camFollowPos:FlxObject;
 	var updateCamera:Bool = false;
 	var playingDeathSound:Bool = false;
 
+	public var camHUD:FlxCamera;
+	public var camGame:FlxCamera;
+
 	var gameOverText:FlxText;
 	var songStatText:FlxText;
 
 	var stageSuffix:String = "";
+
+	public var dadHealthColor:FlxColor;
 
 	public static var characterName:String = 'bf-dead';
 	public static var deathSoundName:String = 'fnf_loss_sfx';
@@ -46,9 +53,19 @@ class GameOverSubstate extends MusicBeatSubstate
 		super.create();
 	}
 
-	public function new(x:Float, y:Float, camX:Float, camY:Float)
+	public function new(x:Float, y:Float, camX:Float, camY:Float, dadName:String)
 	{
 		super();
+
+		camGame = new FlxCamera();
+		camHUD = new FlxCamera();
+		camGame.bgColor.alpha = 0;
+		camHUD.bgColor.alpha = 0;
+		
+		FlxG.cameras.reset(camGame);
+		FlxG.cameras.add(camHUD);
+
+		FlxCamera.defaultCameras = [camGame];
 
 		PlayState.instance.setOnLuas('inGameOver', true);
 
@@ -58,6 +75,10 @@ class GameOverSubstate extends MusicBeatSubstate
 		boyfriend.x += boyfriend.positionArray[0];
 		boyfriend.y += boyfriend.positionArray[1];
 		add(boyfriend);
+
+		dad = new Character(0, 0, dadName);
+		dad.visible = false;
+		add(dad); // idk if we really need to add him but just incase
 
 		gameOverText = new FlxText(0, 25, FlxG.width, "GAME OVER", 72);
 		gameOverText.setFormat(Paths.font("vcr.ttf"), 72, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -74,10 +95,15 @@ class GameOverSubstate extends MusicBeatSubstate
 		+ " | Misses: " + PlayState.songMisses2;
 		add(songStatText);
 
+		dadHealthColor = FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
+
+		gameOverText.cameras = [camHUD];
+		songStatText.cameras = [camHUD];
+
 		camFollow = new FlxPoint(boyfriend.getGraphicMidpoint().x, boyfriend.getGraphicMidpoint().y);
 
 		FlxG.sound.play(Paths.sound(deathSoundName));
-		Conductor.changeBPM(100);
+		Conductor.changeBPM(150);
 		// FlxG.camera.followLerp = 1;
 		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
 		FlxG.camera.scroll.set();
@@ -112,6 +138,9 @@ class GameOverSubstate extends MusicBeatSubstate
 			PlayState.deathCounter = 0;
 			PlayState.seenCutscene = false;
 
+			FlxTween.cancelTweensOf(gameOverText);
+			FlxTween.cancelTweensOf(songStatText);
+
 			WeekData.loadTheFirstEnabledMod();
 			if (PlayState.isStoryMode)
 				MusicBeatState.switchState(new StoryMenuState());
@@ -126,7 +155,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			if(boyfriend.animation.curAnim.curFrame >= 12 && !isFollowingAlready)
 			{
-				FlxG.camera.follow(camFollowPos, LOCKON, 1);
+				FlxG.camera.follow(camFollowPos, LOCKON, 0.4);
 				updateCamera = true;
 				isFollowingAlready = true;
 			}
@@ -166,6 +195,12 @@ class GameOverSubstate extends MusicBeatSubstate
 	override function beatHit()
 	{
 		super.beatHit();
+		if (!isEnding) {
+			if (curBeat % 8 == 0) {
+				FlxTween.color(gameOverText, 0.8, dadHealthColor, FlxColor.WHITE);
+				FlxTween.color(songStatText, 0.8, dadHealthColor, FlxColor.WHITE);
+			}
+		}
 
 		//FlxG.log.add('beat');
 	}
@@ -191,6 +226,10 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			isEnding = true;
 			boyfriend.playAnim('deathConfirm', true);
+			FlxTween.cancelTweensOf(gameOverText);
+			FlxTween.cancelTweensOf(songStatText);
+			FlxTween.tween(gameOverText, {alpha: 0}, 1, {ease: FlxEase.linear});
+			FlxTween.tween(songStatText, {alpha: 0}, 1, {ease: FlxEase.linear});
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music(endSoundName));
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)

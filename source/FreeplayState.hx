@@ -63,7 +63,7 @@ class FreeplayState extends MusicBeatState
 		'nerfed'
 	];
 
-	public static var curDiff:String = '';
+	public static var curDiff:String = 'normal';
 	var diffSelected:Int = 0;
 	var songSelected:Bool = false;
 
@@ -350,6 +350,8 @@ class FreeplayState extends MusicBeatState
 
 		var shiftMult:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
+
+		if(curDiff == null) curDiff = 'normal';
 
 		if(songs.length > 1)
 		{
