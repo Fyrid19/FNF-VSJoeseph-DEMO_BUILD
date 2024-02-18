@@ -533,6 +533,8 @@ class FreeplayState extends MusicBeatState
 	function setDiffSelect(selected:Bool = true) {
 		songSelected = selected;
 
+		changeDiff();
+
 		FlxTween.cancelTweensOf(diffSprite);
 
 		if (selected == true) {
